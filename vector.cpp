@@ -110,6 +110,15 @@ double Vector::loadFactor() const {
     return static_cast<double>(_size) / static_cast<double>(_capacity);
 }
 
+Value& Vector::operator[](size_t idx) {
+    return _data[idx];
+}
+
+const Value& Vector::operator[](size_t idx) const {
+    return _data[idx];
+}
+
+
 void Vector::reserve(size_t capacity) {
     if (capacity <= _capacity) {
         return;
