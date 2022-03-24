@@ -48,5 +48,9 @@ int main() {
     }
     std::cout << std::endl;
 
+    // test find method
+    std::cout << "Index of 10 (exists): " << v.find(10) << std::endl;
+    std::cout << "Index of 888 (not exists): " << v.find(888) << std::endl;
+
     return 0;
 }

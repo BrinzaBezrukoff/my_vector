@@ -118,6 +118,14 @@ const Value& Vector::operator[](size_t idx) const {
     return _data[idx];
 }
 
+long long Vector::find(const Value& value) const {
+    for (long long idx = 0; idx < _size; idx++) {
+        if (_data[idx] == value) {
+            return idx;
+        }
+    }
+    return -1;
+}
 
 void Vector::reserve(size_t capacity) {
     if (capacity <= _capacity) {
