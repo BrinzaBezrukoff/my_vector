@@ -3,7 +3,6 @@
 //
 
 #include <algorithm>
-#include <iostream>
 
 #include "vector.h"
 
@@ -19,7 +18,6 @@ Vector::Vector():
 Vector::Vector(const Value *rawArray, const size_t size, float coef):
     Vector()
 {
-    std::cout << "raw constructor" << std::endl;
     _multiplicativeCoef = coef;
     newSize(size);
     for (int i = 0; i < _size; i++) {
@@ -27,15 +25,7 @@ Vector::Vector(const Value *rawArray, const size_t size, float coef):
     }
 }
 
-Vector::~Vector() {
-    std::cout << "destructor" << std::endl;
-    _capacity = 0;
-    _size = 0;
-    delete [] _data;
-}
-
 Vector::Vector(const Vector &other) {
-    std::cout << "copy constructor" << std::endl;
     delete [] _data;
     _capacity = other._capacity;
     _size = other._size;
@@ -46,7 +36,6 @@ Vector::Vector(const Vector &other) {
 }
 
 Vector &Vector::operator=(const Vector &other) {
-    std::cout << "copy =" << std::endl;
     if (&other == this) {
         return *this;
     }
@@ -56,7 +45,6 @@ Vector &Vector::operator=(const Vector &other) {
 }
 
 Vector::Vector(Vector &&other) noexcept {
-    std::cout << "move constructor" << std::endl;
     delete [] _data;
     _capacity = other._capacity;
     _size = other._size;
@@ -67,13 +55,18 @@ Vector::Vector(Vector &&other) noexcept {
 }
 
 Vector &Vector::operator=(Vector &&other) noexcept {
-    std::cout << "move =" << std::endl;
     if (&other == this) {
         return *this;
     }
     Vector buff (std::move(other));
     std::swap(this->_data, buff._data);
     return *this;
+}
+
+Vector::~Vector() {
+    _capacity = 0;
+    _size = 0;
+    delete [] _data;
 }
 
 void Vector::pushBack(const Value &value) {
