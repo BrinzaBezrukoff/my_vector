@@ -31,5 +31,22 @@ int main() {
     }
     std::cout << std::endl;
 
+    // test insert methods
+    v.insert(15, 4);
+
+    Value array[] = {22, 24, 26, 28};
+    v.insert(array, 4, 6);
+
+    Vector additional;
+    additional.pushBack(-8);
+    additional.pushBack(-5);
+    additional.pushBack(-3);
+    v.insert(additional, 0);
+
+    for (size_t i = 0; i < v.size(); i++) {
+        std::cout << v[i] << ", ";
+    }
+    std::cout << std::endl;
+
     return 0;
 }
