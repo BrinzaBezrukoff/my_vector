@@ -106,6 +106,14 @@ void Vector::popFront() {
     closeGap(0, 1);
 }
 
+void Vector::erase(size_t pos, size_t count) {
+    closeGap(pos, count);
+}
+
+void Vector::eraseBetween(size_t beginPos, size_t endPos) {
+    closeGap(beginPos, endPos - beginPos + 1);
+}
+
 size_t Vector::size() const {
     return _size;
 }

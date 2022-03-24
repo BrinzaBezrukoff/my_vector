@@ -63,5 +63,11 @@ int main() {
     vShow(v);
     vInfo(v);
 
+    // test erase methods
+    v.erase(1, 2);
+    v.eraseBetween(6, 8);
+    vShow(v);
+    vInfo(v);
+
     return 0;
 }
