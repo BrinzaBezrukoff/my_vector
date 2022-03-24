@@ -3,6 +3,19 @@
 #include "vector.h"
 
 
+void vInfo(Vector& v) {
+    std::cout << "Capacity: " << v.capacity() << std::endl;
+    std::cout << "Size: " << v.size() << std::endl;
+    std::cout << "LoadFactor: " << v.loadFactor() << std::endl;
+}
+
+void vShow(Vector& v) {
+    for (size_t i = 0; i < v.size(); i++) {
+        std::cout << v[i] << ((i == v.size() - 1) ? '\n' : ',');
+    }
+}
+
+
 int main() {
 
     Vector v;
@@ -13,23 +26,17 @@ int main() {
     v.pushFront(8);
     v.pushFront(5);
     v.pushBack(20);
-    std::cout << v.capacity() << std::endl;
-    std::cout << v.size() << std::endl;
-    std::cout << v.loadFactor() << std::endl;
+
+    vInfo(v);
+    vShow(v);
 
     // add 2 more values, shrink allocation to size
     v.pushBack(30);
     v.pushFront(3);
     v.shrinkToFit();
-    std::cout << v.capacity() << std::endl;
-    std::cout << v.size() << std::endl;
-    std::cout << v.loadFactor() << std::endl;
 
-    // show vector items
-    for (size_t i = 0; i < v.size(); i++) {
-        std::cout << v[i] << ", ";
-    }
-    std::cout << std::endl;
+    vInfo(v);
+    vShow(v);
 
     // test insert methods
     v.insert(15, 4);
@@ -43,14 +50,18 @@ int main() {
     additional.pushBack(-3);
     v.insert(additional, 0);
 
-    for (size_t i = 0; i < v.size(); i++) {
-        std::cout << v[i] << ", ";
-    }
-    std::cout << std::endl;
+    vShow(v);
 
     // test find method
     std::cout << "Index of 10 (exists): " << v.find(10) << std::endl;
     std::cout << "Index of 888 (not exists): " << v.find(888) << std::endl;
+
+    // test pop methods
+    vInfo(v);
+    v.popBack();
+    v.popFront();
+    vShow(v);
+    vInfo(v);
 
     return 0;
 }

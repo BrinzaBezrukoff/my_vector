@@ -98,6 +98,14 @@ void Vector::insert(const Vector& vector, size_t pos) {
     }
 }
 
+void Vector::popBack() {
+    newSize(_size - 1);
+}
+
+void Vector::popFront() {
+    closeGap(0, 1);
+}
+
 size_t Vector::size() const {
     return _size;
 }
@@ -177,3 +185,12 @@ void Vector::makeGap(size_t pos, size_t len) {
     }
 }
 
+void Vector::closeGap(size_t pos, size_t len) {
+    if (len == 0) {
+        return;
+    }
+    for (size_t i = pos + len; i < _size; i++) {
+        _data[i - len] = _data[i];
+    }
+    newSize(_size - len);
+}

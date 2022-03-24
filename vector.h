@@ -142,6 +142,11 @@ private:
      * Make gap starting at index pos with length len
     */
     void makeGap(size_t pos, size_t len);
+
+    /*!
+     * Close gap
+    */
+    void closeGap(size_t pos, size_t len);
 };
 
 
