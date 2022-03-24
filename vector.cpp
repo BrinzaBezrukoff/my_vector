@@ -79,6 +79,25 @@ void Vector::pushFront(const Value &value) {
     _data[0] = value;
 }
 
+void Vector::insert(const Value& value, size_t pos) {
+    makeGap(pos, 1);
+    _data[pos] = value;
+}
+
+void Vector::insert(const Value* values, size_t size, size_t pos) {
+    makeGap(pos, size);
+    for (size_t i = 0; i < size; i++) {
+        _data[pos + i] = values[i];
+    }
+}
+
+void Vector::insert(const Vector& vector, size_t pos) {
+    makeGap(pos, vector.size());
+    for (size_t i = 0; i < vector.size(); i++) {
+        _data[pos + i] = vector[i];
+    }
+}
+
 size_t Vector::size() const {
     return _size;
 }
