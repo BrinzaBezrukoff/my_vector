@@ -14,7 +14,7 @@ class Vector {
 public:
     // All c-tors and "=" operators make vectors
     // where _capacity is equal to _size
-    Vector() = default;
+    Vector();
     Vector(const Value* rawArray, size_t size, float coef = 2.0f);
 
     Vector(const Vector& other);
@@ -120,6 +120,8 @@ public:
     */
     void shrinkToFit();
 
+    friend void swap(Vector& l, Vector& r);
+
 private:
     Value* _data = nullptr;
     size_t _size = 0;
@@ -127,9 +129,14 @@ private:
     float _multiplicativeCoef = 2.0f;
 
     /*!
-        Extends _data for any requirements
+     * Check loadFactor and call .extendData() if needed
     */
-    void extendData(size_t newSize);
+    void newSize(size_t newSize);
+
+    /*!
+     * Change vector capacity and reallocate memory
+    */
+    void newCapacity(size_t newCapacity);
 };
 
 

@@ -8,12 +8,20 @@
 #include "vector.h"
 
 
-Vector::Vector(const Value *rawArray, const size_t size, float coef) {
-    std::cout << "raw constructor" << std::endl;
-    _capacity = size;
-    _size = size;
-    _multiplicativeCoef = coef;
+Vector::Vector():
+    _capacity(1),
+    _size(0),
+    _multiplicativeCoef(2.0)
+{
     _data = new Value[_capacity];
+}
+
+Vector::Vector(const Value *rawArray, const size_t size, float coef):
+    Vector()
+{
+    std::cout << "raw constructor" << std::endl;
+    _multiplicativeCoef = coef;
+    newSize(size);
     for (int i = 0; i < _size; i++) {
         _data[i] = rawArray[i];
     }
@@ -69,34 +77,66 @@ Vector &Vector::operator=(Vector &&other) noexcept {
 }
 
 void Vector::pushBack(const Value &value) {
-    extendData(_size + 1);
-    _data[_size] = value;
-    _size += 1;
+    newSize(_size + 1);
+    _data[_size - 1] = value;
 }
 
 void Vector::pushFront(const Value &value) {
-    extendData(_size + 1);
-    for (int i = 0; i < _size; i++) {
+    newSize(_size + 1);
+    for (int i = 0; i < _size - 1; i++) {
         _data[i + 1] = _data[i];
     }
     _data[0] = value;
 }
 
-void Vector::extendData(size_t newSize) {
-    if (_capacity >= newSize) {
-        return;
-    }
-    while (_capacity < newSize) {
-        _capacity = static_cast<size_t>(static_cast<float>(_capacity) * _multiplicativeCoef + 1);
-    }
-    auto *newData = new Value[_capacity];
-    for (int i = 0; i < _size; i++) {
-        newData[i] = _data[i];
-    }
-    delete [] _data;
-    _data = newData;
-}
-
 size_t Vector::size() const {
     return _size;
 }
+
+size_t Vector::capacity() const {
+    return _capacity;
+}
+
+double Vector::loadFactor() const {
+    return static_cast<double>(_size) / static_cast<double>(_capacity);
+}
+
+void Vector::reserve(size_t capacity) {
+    if (capacity <= _capacity) {
+        return;
+    }
+    newCapacity(capacity);
+}
+
+void Vector::shrinkToFit() {
+    newCapacity(_size);
+}
+
+void swap(Vector& l, Vector& r) {
+    using std::swap;
+    swap(l._data, r._data);
+    swap(l._capacity, r._capacity);
+    swap(l._size, r._size);
+    swap(l._multiplicativeCoef, r._multiplicativeCoef);
+}
+
+void Vector::newSize(size_t newSize) {
+    _size = newSize;
+    double lf = loadFactor();
+    if (lf * _multiplicativeCoef > 1) {
+        reserve(_multiplicativeCoef * _size);
+    }
+}
+
+void Vector::newCapacity(size_t newCapacity) {
+    Value* newData = new Value[newCapacity];
+    _capacity = newCapacity;
+    if (_data != nullptr) {
+        for (int i = 0; i < _size; i++) {
+            newData[i] = _data[i];
+        }
+        delete[] _data;
+    }
+    _data = newData;
+}
+

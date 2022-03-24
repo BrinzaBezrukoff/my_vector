@@ -1,29 +1,29 @@
 #include <iostream>
 
-#define MOD 1000000007
-
-
-long fastpow(long num, long power);
+#include "vector.h"
 
 
 int main() {
 
-    long result = fastpow(4, 10);
+    Vector v;
 
-    std::cout << result << std::endl;
+    // reserve memory for 100 values, add only 6
+    v.reserve(100);
+    v.pushBack(10);
+    v.pushFront(20);
+    v.pushFront(30);
+    v.pushBack(40);
+    std::cout << v.capacity() << std::endl;
+    std::cout << v.size() << std::endl;
+    std::cout << v.loadFactor() << std::endl;
+
+    // add 2 more values, shrink allocation to size
+    v.pushBack(50);
+    v.pushFront(60);
+    v.shrinkToFit();
+    std::cout << v.capacity() << std::endl;
+    std::cout << v.size() << std::endl;
+    std::cout << v.loadFactor() << std::endl;
 
     return 0;
-}
-
-long fastpow(long num, long power) {
-    if (power == 0) {
-        return 1;
-    }
-    if (power % 2 == 0) {
-        long t = fastpow(num, power / 2);
-        return t * t;
-    }
-    else {
-        return num * fastpow(num, power - 1);
-    }
 }
