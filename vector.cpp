@@ -75,10 +75,7 @@ void Vector::pushBack(const Value &value) {
 }
 
 void Vector::pushFront(const Value &value) {
-    newSize(_size + 1);
-    for (int i = 0; i < _size - 1; i++) {
-        _data[i + 1] = _data[i];
-    }
+    makeGap(0, 1);
     _data[0] = value;
 }
 
@@ -131,5 +128,16 @@ void Vector::newCapacity(size_t newCapacity) {
         delete[] _data;
     }
     _data = newData;
+}
+
+
+void Vector::makeGap(size_t pos, size_t len) {
+    if (len == 0) {
+        return;
+    }
+    newSize(_size + len);
+    for (size_t i = _size - 1; i >= pos + len; i--) {
+        _data[i] = _data[i - len];
+    }
 }
 

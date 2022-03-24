@@ -137,6 +137,11 @@ private:
      * Change vector capacity and reallocate memory
     */
     void newCapacity(size_t newCapacity);
+
+    /*!
+     * Make gap starting at index pos with length len
+    */
+    void makeGap(size_t pos, size_t len);
 };
 
 
