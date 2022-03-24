@@ -20,7 +20,7 @@ Vector::Vector(const Value *rawArray, const size_t size, float coef):
 {
     _multiplicativeCoef = coef;
     newSize(size);
-    for (int i = 0; i < _size; i++) {
+    for (size_t i = 0; i < _size; i++) {
         _data[i] = rawArray[i];
     }
 }
@@ -30,7 +30,7 @@ Vector::Vector(const Vector &other) {
     _capacity = other._capacity;
     _size = other._size;
     _data = new Value[_capacity];
-    for (int i = 0; i < _size; i++) {
+    for (size_t i = 0; i < _size; i++) {
         _data[i] = other._data[i];
     }
 }
@@ -166,7 +166,7 @@ void Vector::newCapacity(size_t newCapacity) {
     Value* newData = new Value[newCapacity];
     _capacity = newCapacity;
     if (_data != nullptr) {
-        for (int i = 0; i < _size; i++) {
+        for (size_t i = 0; i < _size; i++) {
             newData[i] = _data[i];
         }
         delete[] _data;
