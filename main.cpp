@@ -69,5 +69,14 @@ int main() {
     vShow(v);
     vInfo(v);
 
+    // test copy/move constructor, assignments
+    Vector v2 (v);
+    vShow(v2);
+    vInfo(v2);
+
+    v2 = v;
+    vShow(v2);
+    vInfo(v2);
+
     return 0;
 }

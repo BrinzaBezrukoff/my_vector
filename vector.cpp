@@ -10,9 +10,10 @@
 Vector::Vector():
     _capacity(1),
     _size(0),
-    _multiplicativeCoef(2.0)
+    _multiplicativeCoef(2.0),
+    _data(nullptr)
 {
-    _data = new Value[_capacity];
+    newCapacity(_capacity);
 }
 
 Vector::Vector(const Value *rawArray, const size_t size, float coef):
@@ -27,12 +28,10 @@ Vector::Vector(const Value *rawArray, const size_t size, float coef):
 
 Vector::Vector(const Vector &other) {
     delete [] _data;
-    _capacity = other._capacity;
-    _size = other._size;
-    _data = new Value[_capacity];
-    for (size_t i = 0; i < _size; i++) {
-        _data[i] = other._data[i];
-    }
+    _data = nullptr;
+    _multiplicativeCoef = other._multiplicativeCoef;
+    newCapacity(other._capacity);
+    insert(other._data, other.size(), 0);
 }
 
 Vector &Vector::operator=(const Vector &other) {
@@ -49,6 +48,7 @@ Vector::Vector(Vector &&other) noexcept {
     _capacity = other._capacity;
     _size = other._size;
     _data = other._data;
+    _multiplicativeCoef = other._multiplicativeCoef;
     other._data = nullptr;
     other._capacity = 0;
     other._size = 0;
