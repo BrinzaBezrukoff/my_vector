@@ -96,11 +96,11 @@ void Vector::insert(const Vector& vector, size_t pos) {
 }
 
 void Vector::popBack() {
-    newSize(_size - 1);
+    erase(_size - 1);
 }
 
 void Vector::popFront() {
-    closeGap(0, 1);
+    erase(0);
 }
 
 void Vector::erase(size_t pos, size_t count) {
@@ -108,7 +108,7 @@ void Vector::erase(size_t pos, size_t count) {
 }
 
 void Vector::eraseBetween(size_t beginPos, size_t endPos) {
-    closeGap(beginPos, endPos - beginPos + 1);
+    erase(beginPos, endPos - beginPos + 1);
 }
 
 size_t Vector::size() const {
