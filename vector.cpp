@@ -168,6 +168,9 @@ void Vector::newSize(size_t newSize) {
 }
 
 void Vector::newCapacity(size_t newCapacity) {
+    if (newCapacity < _size) {
+        newCapacity = _size;
+    }
     Value* newData = new Value[newCapacity];
     _capacity = newCapacity;
     if (_data != nullptr) {
