@@ -20,7 +20,7 @@ int main() {
 
     Vector v;
 
-    // reserve memory for 100 values, add only 6
+    std::cout << "reserve memory for 100 values, add only 6" << std::endl;
     v.reserve(100);
     v.pushBack(10);
     v.pushFront(8);
@@ -30,7 +30,7 @@ int main() {
     vInfo(v);
     vShow(v);
 
-    // add 2 more values, shrink allocation to size
+    std::cout << "add 2 more values, shrink allocation to size" << std::endl;
     v.pushBack(30);
     v.pushFront(3);
     v.shrinkToFit();
@@ -38,7 +38,7 @@ int main() {
     vInfo(v);
     vShow(v);
 
-    // test insert methods
+    std::cout << "test insert methods" << std::endl;
     v.insert(15, 4);
 
     Value array[] = {22, 24, 26, 28};
@@ -50,30 +50,32 @@ int main() {
     additional.pushBack(-3);
     v.insert(additional, 0);
 
+    vInfo(v);
     vShow(v);
 
-    // test find method
+    std::cout << "test find method" << std::endl;
     std::cout << "Index of 10 (exists): " << v.find(10) << std::endl;
     std::cout << "Index of 888 (not exists): " << v.find(888) << std::endl;
 
-    // test pop methods
+    std::cout << "test pop methods" << std::endl;
     vInfo(v);
     v.popBack();
     v.popFront();
     vShow(v);
     vInfo(v);
 
-    // test erase methods
+    std::cout << "test erase methods" << std::endl;
     v.erase(1, 2);
     v.eraseBetween(6, 8);
     vShow(v);
     vInfo(v);
 
-    // test copy/move constructor, assignments
+    std::cout << "test copy constructor" << std::endl;
     Vector v2 (v);
     vShow(v2);
     vInfo(v2);
 
+    std::cout << "test copy assignment" << std::endl;
     v2 = v;
     vShow(v2);
     vInfo(v2);
