@@ -197,6 +197,9 @@ void Vector::closeGap(size_t pos, size_t len) {
     if (len == 0) {
         return;
     }
+    if (pos + len >= _size) {
+        len = _size - pos;
+    }
     for (size_t i = pos + len; i < _size; i++) {
         _data[i - len] = _data[i];
     }
