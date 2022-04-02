@@ -27,8 +27,6 @@ Vector::Vector(const Value *rawArray, const size_t size, float coef):
 }
 
 Vector::Vector(const Vector &other) {
-    delete [] _data;
-    _data = nullptr;
     _multiplicativeCoef = other._multiplicativeCoef;
     newCapacity(other._capacity);
     insert(other._data, other.size(), 0);
@@ -39,12 +37,11 @@ Vector &Vector::operator=(const Vector &other) {
         return *this;
     }
     Vector buff (other);
-    std::swap(this->_data, buff._data);
+    std::swap(*this, buff);
     return *this;
 }
 
 Vector::Vector(Vector &&other) noexcept {
-    delete [] _data;
     _capacity = other._capacity;
     _size = other._size;
     _data = other._data;
@@ -59,7 +56,7 @@ Vector &Vector::operator=(Vector &&other) noexcept {
         return *this;
     }
     Vector buff (std::move(other));
-    std::swap(this->_data, buff._data);
+    std::swap(*this, buff);
     return *this;
 }
 
