@@ -14,7 +14,7 @@ class Vector {
 public:
     // All c-tors and "=" operators make vectors
     // where _capacity is equal to _size
-    Vector();
+    Vector() = default;
     Vector(const Value* rawArray, size_t size, float coef = 2.0f);
 
     Vector(const Vector& other);

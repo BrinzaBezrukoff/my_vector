@@ -8,14 +8,6 @@
 #include "Vector.h"
 
 
-Vector::Vector():
-    _capacity(0),
-    _size(0),
-    _multiplicativeCoef(2.0),
-    _data(nullptr)
-{
-}
-
 Vector::Vector(const Value *rawArray, const size_t size, float coef):
     Vector()
 {
@@ -28,7 +20,6 @@ Vector::Vector(const Value *rawArray, const size_t size, float coef):
 
 Vector::Vector(const Vector &other) {
     _multiplicativeCoef = other._multiplicativeCoef;
-    newCapacity(other._capacity);
     insert(other._data, other.size(), 0);
 }
 
@@ -39,6 +30,7 @@ Vector &Vector::operator=(const Vector &other) {
     _capacity = 0;
     _size = 0;
     delete[] _data;
+    _data = nullptr;
     _multiplicativeCoef = other._multiplicativeCoef;
     newCapacity(other._capacity);
     insert(other._data, other.size(), 0);
