@@ -3,6 +3,7 @@
 //
 
 #include <algorithm>
+#include <stdexcept>
 
 #include "Vector.h"
 
@@ -102,10 +103,16 @@ void Vector::insert(const Vector& vector, size_t pos) {
 }
 
 void Vector::popBack() {
+    if (_size == 0) {
+        throw std::range_error("Can't pop from empty vector");
+    }
     erase(_size - 1);
 }
 
 void Vector::popFront() {
+    if (_size == 0) {
+        throw std::range_error("Can't pop from empty vector");
+    }
     erase(0);
 }
 
