@@ -4,7 +4,7 @@
 
 #include <algorithm>
 
-#include "vector.h"
+#include "Vector.h"
 
 
 Vector::Vector():
