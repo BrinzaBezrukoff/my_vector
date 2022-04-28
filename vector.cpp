@@ -13,7 +13,6 @@ Vector::Vector():
     _multiplicativeCoef(2.0),
     _data(nullptr)
 {
-    newCapacity(1);
 }
 
 Vector::Vector(const Value *rawArray, const size_t size, float coef):
