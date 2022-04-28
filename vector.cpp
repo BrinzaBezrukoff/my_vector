@@ -204,3 +204,52 @@ void Vector::closeGap(size_t pos, size_t len) {
     }
     newSize(_size - len);
 }
+
+Vector::Iterator Vector::begin() {
+    return Vector::Iterator(_data);
+}
+
+Vector::Iterator Vector::end() {
+    return Vector::Iterator(_data + size());
+}
+
+
+// Iterator class
+
+Vector::Iterator::Iterator(Value* ptr) : _ptr(ptr) {}
+
+
+Value& Vector::Iterator::operator*() {
+    return *_ptr;
+}
+
+const Value& Vector::Iterator::operator*() const {
+    return *_ptr;
+}
+
+Value* Vector::Iterator::operator->() {
+    return _ptr;
+}
+
+const Value* Vector::Iterator::operator->() const {
+    return _ptr;
+}
+
+Vector::Iterator Vector::Iterator::operator++() {
+    _ptr++;
+    return *this;
+}
+
+Vector::Iterator Vector::Iterator::operator++(int) {
+    Iterator tmp (*this);
+    _ptr++;
+    return tmp;
+}
+
+bool Vector::Iterator::operator==(const Vector::Iterator& other) const {
+    return _ptr == other._ptr;
+}
+
+bool Vector::Iterator::operator!=(const Vector::Iterator& other) const {
+    return !(*this == other);
+}

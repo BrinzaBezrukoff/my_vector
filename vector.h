@@ -120,7 +120,32 @@ public:
     */
     void shrinkToFit();
 
-    friend void swap(Vector& l, Vector& r);
+    class Iterator
+    {
+        Value* _ptr;
+    public:
+        explicit Iterator(Value* ptr);
+
+        Value& operator*();
+
+        const Value& operator*() const;
+
+        Value* operator->();
+
+        const Value* operator->() const;
+
+        Iterator operator++();
+
+        Iterator operator++(int);
+
+        bool operator==(const Iterator& other) const;
+
+        bool operator!=(const Iterator& other) const;
+    };
+
+    Iterator begin();
+    Iterator end();
+
 
 private:
     Value* _data = nullptr;

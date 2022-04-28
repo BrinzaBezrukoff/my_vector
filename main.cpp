@@ -86,5 +86,11 @@ int main() {
     vInfo(v3);
     vInfo(v2);
 
+    std::cout << "test iterators" << std::endl << "| ";
+    for (auto&& value: v3) {
+        std::cout << value << " | ";
+    }
+    std::cout << std::endl;
+
     return 0;
 }
