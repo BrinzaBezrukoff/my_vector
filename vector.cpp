@@ -36,8 +36,12 @@ Vector &Vector::operator=(const Vector &other) {
     if (&other == this) {
         return *this;
     }
-    Vector buff (other);
-    std::swap(*this, buff);
+    _capacity = 0;
+    _size = 0;
+    delete[] _data;
+    _multiplicativeCoef = other._multiplicativeCoef;
+    newCapacity(other._capacity);
+    insert(other._data, other.size(), 0);
     return *this;
 }
 
@@ -55,8 +59,13 @@ Vector &Vector::operator=(Vector &&other) noexcept {
     if (&other == this) {
         return *this;
     }
-    Vector buff (std::move(other));
-    std::swap(*this, buff);
+    _capacity = other._capacity;
+    _size = other._size;
+    _data = other._data;
+    _multiplicativeCoef = other._multiplicativeCoef;
+    other._data = nullptr;
+    other._capacity = 0;
+    other._size = 0;
     return *this;
 }
 
@@ -147,14 +156,6 @@ void Vector::reserve(size_t capacity) {
 
 void Vector::shrinkToFit() {
     newCapacity(_size);
-}
-
-void swap(Vector& l, Vector& r) {
-    using std::swap;
-    swap(l._data, r._data);
-    swap(l._capacity, r._capacity);
-    swap(l._size, r._size);
-    swap(l._multiplicativeCoef, r._multiplicativeCoef);
 }
 
 void Vector::newSize(size_t newSize) {

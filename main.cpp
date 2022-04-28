@@ -80,5 +80,11 @@ int main() {
     vShow(v2);
     vInfo(v2);
 
+    std::cout << "test move copy" << std::endl;
+    Vector v3 (std::move(v2));
+    vShow(v3);
+    vInfo(v3);
+    vInfo(v2);
+
     return 0;
 }
