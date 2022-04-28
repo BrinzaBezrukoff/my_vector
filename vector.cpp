@@ -67,13 +67,11 @@ Vector::~Vector() {
 }
 
 void Vector::pushBack(const Value &value) {
-    newSize(_size + 1);
-    _data[_size - 1] = value;
+    insert(value, _size);
 }
 
 void Vector::pushFront(const Value &value) {
-    makeGap(0, 1);
-    _data[0] = value;
+    insert(value, 0);
 }
 
 void Vector::insert(const Value& value, size_t pos) {
