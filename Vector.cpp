@@ -8,9 +8,7 @@
 #include "Vector.h"
 
 
-Vector::Vector(const Value *rawArray, const size_t size, float coef):
-    Vector()
-{
+Vector::Vector(const Value *rawArray, const size_t size, float coef) {
     _multiplicativeCoef = coef;
     newSize(size);
     for (size_t i = 0; i < _size; i++) {
