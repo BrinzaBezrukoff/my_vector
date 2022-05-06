@@ -152,26 +152,6 @@ private:
     size_t _size = 0;
     size_t _capacity = 0;
     float _multiplicativeCoef = 2.0f;
-
-    /*!
-     * Check loadFactor and call .extendData() if needed
-    */
-    void newSize(size_t newSize);
-
-    /*!
-     * Change vector capacity and reallocate memory
-    */
-    void newCapacity(size_t newCapacity);
-
-    /*!
-     * Make gap starting at index pos with length len
-    */
-    void makeGap(size_t pos, size_t len);
-
-    /*!
-     * Close gap
-    */
-    void closeGap(size_t pos, size_t len);
 };
 
 

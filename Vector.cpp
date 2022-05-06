@@ -15,7 +15,7 @@ Vector::Vector(const Value *rawArray, const size_t size, float coef) {
 
 Vector::Vector(const Vector &other) {
     _multiplicativeCoef = other._multiplicativeCoef;
-    insert(other._data, other.size(), 0);
+    insert(other, 0);
 }
 
 Vector &Vector::operator=(const Vector &other) {
