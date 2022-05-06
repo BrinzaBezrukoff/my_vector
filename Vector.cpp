@@ -32,9 +32,9 @@ Vector &Vector::operator=(const Vector &other) {
 }
 
 Vector::Vector(Vector &&other) noexcept {
+    _data = other._data;
     _capacity = other._capacity;
     _size = other._size;
-    _data = other._data;
     _multiplicativeCoef = other._multiplicativeCoef;
     other._data = nullptr;
     other._capacity = 0;
@@ -153,6 +153,7 @@ void Vector::reserve(size_t capacity) {
         }
         delete _data;
     }
+    _capacity = capacity;
     _data = newData;
 }
 
