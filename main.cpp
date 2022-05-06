@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "Vector.h"
+#include "vector/Vector.h"
 
 
 void vInfo(Vector& v) {
