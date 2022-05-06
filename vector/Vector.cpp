@@ -74,7 +74,9 @@ void Vector::insert(const Value& value, size_t pos) {
 }
 
 void Vector::insert(const Value* values, size_t size, size_t pos) {
-    reserve((_size + size) * _multiplicativeCoef);
+    if (_capacity < _size + size) {
+        reserve((_size + size) * _multiplicativeCoef);
+    }
     for (size_t idx = _size; idx > pos; idx--) {
         _data[idx - 1 + size] = _data[idx - 1];
     }
@@ -159,10 +161,12 @@ void Vector::shrinkToFit() {
         return;
     }
     Value* newData = new Value[_size];
-    for (size_t idx = 0; idx < _size; idx++) {
-        newData[idx] = _data[idx];
+    if (_data != nullptr) {
+        for (size_t idx = 0; idx < _size; idx++) {
+            newData[idx] = _data[idx];
+        }
+        delete _data;
     }
-    delete _data;
     _data = newData;
     _capacity = _size;
 }
