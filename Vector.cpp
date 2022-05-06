@@ -10,10 +10,7 @@
 
 Vector::Vector(const Value *rawArray, const size_t size, float coef) {
     _multiplicativeCoef = coef;
-    newSize(size);
-    for (size_t i = 0; i < _size; i++) {
-        _data[i] = rawArray[i];
-    }
+    insert(rawArray, size, 0);
 }
 
 Vector::Vector(const Vector &other) {
@@ -30,7 +27,6 @@ Vector &Vector::operator=(const Vector &other) {
     delete[] _data;
     _data = nullptr;
     _multiplicativeCoef = other._multiplicativeCoef;
-    newCapacity(other._capacity);
     insert(other._data, other.size(), 0);
     return *this;
 }
@@ -66,7 +62,7 @@ Vector::~Vector() {
 }
 
 void Vector::pushBack(const Value &value) {
-    insert(value, _size);
+    insert(value, size());
 }
 
 void Vector::pushFront(const Value &value) {
@@ -74,22 +70,22 @@ void Vector::pushFront(const Value &value) {
 }
 
 void Vector::insert(const Value& value, size_t pos) {
-    makeGap(pos, 1);
-    _data[pos] = value;
+    insert(&value, 1, pos);
 }
 
 void Vector::insert(const Value* values, size_t size, size_t pos) {
-    makeGap(pos, size);
+    reserve((_size + size) * _multiplicativeCoef);
+    for (size_t idx = _size; idx > pos; idx--) {
+        _data[idx + size - 1] = _data[idx - 1];
+    }
     for (size_t i = 0; i < size; i++) {
         _data[pos + i] = values[i];
     }
+    _size += size;
 }
 
 void Vector::insert(const Vector& vector, size_t pos) {
-    makeGap(pos, vector.size());
-    for (size_t i = 0; i < vector.size(); i++) {
-        _data[pos + i] = vector[i];
-    }
+    insert(vector._data, vector.size(), pos);
 }
 
 void Vector::popBack() {
@@ -107,7 +103,10 @@ void Vector::popFront() {
 }
 
 void Vector::erase(size_t pos, size_t count) {
-    closeGap(pos, count);
+    for (size_t idx = pos + count; idx < _size; idx++) {
+        _data[idx - count] = _data[idx];
+    }
+    _size -= count;
 }
 
 void Vector::eraseBetween(size_t beginPos, size_t endPos) {
@@ -147,58 +146,27 @@ void Vector::reserve(size_t capacity) {
     if (capacity <= _capacity) {
         return;
     }
-    newCapacity(capacity);
-}
-
-void Vector::shrinkToFit() {
-    newCapacity(_size);
-}
-
-void Vector::newSize(size_t newSize) {
-    _size = newSize;
-    double lf = loadFactor();
-    if (lf * _multiplicativeCoef > 1) {
-        reserve(_multiplicativeCoef * _size);
-    }
-}
-
-void Vector::newCapacity(size_t newCapacity) {
-    if (newCapacity < _size) {
-        newCapacity = _size;
-    }
-    Value* newData = new Value[newCapacity];
-    _capacity = newCapacity;
+    Value* newData = new Value[capacity];
     if (_data != nullptr) {
-        for (size_t i = 0; i < _size; i++) {
-            newData[i] = _data[i];
+        for (size_t idx = 0; idx < _size; idx++) {
+            newData[idx] = _data[idx];
         }
-        delete[] _data;
+        delete _data;
     }
     _data = newData;
 }
 
-
-void Vector::makeGap(size_t pos, size_t len) {
-    if (len == 0) {
+void Vector::shrinkToFit() {
+    if (_capacity == _size) {
         return;
     }
-    newSize(_size + len);
-    for (size_t i = _size - 1; i >= pos + len; i--) {
-        _data[i] = _data[i - len];
+    Value* newData = new Value[_size];
+    for (size_t idx = 0; idx < _size; idx++) {
+        newData[idx] = _data[idx];
     }
-}
-
-void Vector::closeGap(size_t pos, size_t len) {
-    if (len == 0) {
-        return;
-    }
-    if (pos + len >= _size) {
-        len = _size - pos;
-    }
-    for (size_t i = pos + len; i < _size; i++) {
-        _data[i - len] = _data[i];
-    }
-    newSize(_size - len);
+    delete _data;
+    _data = newData;
+    _capacity = _size;
 }
 
 Vector::Iterator Vector::begin() {
