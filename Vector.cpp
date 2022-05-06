@@ -27,7 +27,7 @@ Vector &Vector::operator=(const Vector &other) {
     delete[] _data;
     _data = nullptr;
     _multiplicativeCoef = other._multiplicativeCoef;
-    insert(other._data, other.size(), 0);
+    insert(other, 0);
     return *this;
 }
 
@@ -76,7 +76,7 @@ void Vector::insert(const Value& value, size_t pos) {
 void Vector::insert(const Value* values, size_t size, size_t pos) {
     reserve((_size + size) * _multiplicativeCoef);
     for (size_t idx = _size; idx > pos; idx--) {
-        _data[idx + size - 1] = _data[idx - 1];
+        _data[idx - 1 + size] = _data[idx - 1];
     }
     for (size_t i = 0; i < size; i++) {
         _data[pos + i] = values[i];
