@@ -110,7 +110,7 @@ void Vector::erase(size_t pos, size_t count) {
 }
 
 void Vector::eraseBetween(size_t beginPos, size_t endPos) {
-    erase(beginPos, endPos - beginPos + 1);
+    erase(beginPos, endPos - beginPos);
 }
 
 size_t Vector::size() const {
