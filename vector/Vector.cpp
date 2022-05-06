@@ -102,6 +102,9 @@ void Vector::erase(size_t pos, size_t count) {
     if (_size == 0) {
         throw std::length_error("Can't erase in empty vector");
     }
+    if (pos + count >= _size) {
+        count = _size - pos;
+    }
     for (size_t idx = pos + count; idx < _size; idx++) {
         _data[idx - count] = _data[idx];
     }
